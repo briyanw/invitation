@@ -6,16 +6,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f8fafc;
       max-width: 420px;
       margin: 80px auto;
-      padding: 16px;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
     }
     input, button {
       width: 100%;
-      padding: 12px;
-      margin-top: 12px;
+      padding: 14px;
       font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 16px;
+      background: #22c55e;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #16a34a;
+    }
+    small {
+      display: block;
+      margin-top: 12px;
+      text-align: center;
+      color: #555;
     }
   </style>
 </head>
@@ -24,32 +48,38 @@
   <h2>WA.me Generator</h2>
 
   <input
-    type="text"
     id="phone"
+    type="text"
     placeholder="Contoh: 0881-0235-77091"
+    onkeydown="if(event.key==='Enter') generateWA()"
   />
 
-  <button onclick="generateWA()">Chat via WhatsApp</button>
+  <button onclick="generateWA()">
+    Chat via WhatsApp
+  </button>
+
+  <small>Support: 08xxx, +62xxx, pakai strip/spasi</small>
 
   <script>
     function generateWA() {
-      let phone = document.getElementById("phone").value;
+      let phone = document.getElementById("phone").value.trim();
 
       // Ambil angka saja
       phone = phone.replace(/\D/g, "");
 
-      // Jika diawali 0 → ganti 62
+      // Konversi 0xxx → 62xxx
       if (phone.startsWith("0")) {
-        phone = "62" + phone.substring(1);
+        phone = "62" + phone.slice(1);
       }
 
-      if (!phone.startsWith("62")) {
-        alert("Nomor tidak valid");
+      // Validasi sederhana nomor Indonesia
+      if (!phone.startsWith("62") || phone.length < 10) {
+        alert("Nomor WhatsApp tidak valid");
         return;
       }
 
-      const waUrl = `https://wa.me/${phone}`;
-      window.location.href = waUrl;
+      // Redirect ke WhatsApp
+      window.location.href = `https://wa.me/${phone}`;
     }
   </script>
 
