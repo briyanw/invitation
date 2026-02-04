@@ -1,30 +1,57 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="keywords" content="[KEYWORDS]" />
-    <meta name="description" content="[DESCRIPTION]" />
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>WhatsApp Link Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 420px;
+      margin: 80px auto;
+      padding: 16px;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
 
-    <meta property="og:title" content="[TITLE]" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="[URL]" />
-    <meta property="og:image" content="[IMAGE]" />
-    <meta property="og:description" content="[DESCRIPTION]" />
+  <h2>WA.me Generator</h2>
 
-    <meta name="twitter:card" content="[TITLE]" />
-    <meta name="twitter:url" content="[URL]" />
-    <meta name="twitter:title" content="Home" />
-    <meta name="twitter:description" content="[DESCRIPTION]" />
-    <meta name="twitter:image" content="[IMAGE]" />
-    
-    <title>[TITLE]</title>
-    
-    <meta http-equiv="refresh" content="0;URL='https://www.youtube.com/watch?v=dQw4w9WgXcQ'" />
-    <script>window.location.href='https://www.youtube.com/watch?v=dQw4w9WgXcQ';</script>
-   
-  </head>
-  <body>
-    [CONTENT]
-  </body>
+  <input
+    type="text"
+    id="phone"
+    placeholder="Contoh: 0881-0235-77091"
+  />
+
+  <button onclick="generateWA()">Chat via WhatsApp</button>
+
+  <script>
+    function generateWA() {
+      let phone = document.getElementById("phone").value;
+
+      // Ambil angka saja
+      phone = phone.replace(/\D/g, "");
+
+      // Jika diawali 0 → ganti 62
+      if (phone.startsWith("0")) {
+        phone = "62" + phone.substring(1);
+      }
+
+      if (!phone.startsWith("62")) {
+        alert("Nomor tidak valid");
+        return;
+      }
+
+      const waUrl = `https://wa.me/${phone}`;
+      window.location.href = waUrl;
+    }
+  </script>
+
+</body>
 </html>
