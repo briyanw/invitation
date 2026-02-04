@@ -4,85 +4,131 @@
   <meta charset="UTF-8" />
   <title>WhatsApp Link Generator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f8fafc;
-      max-width: 420px;
-      margin: 80px auto;
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      background: #f1f5f9;
+      margin: 0;
+      padding: 16px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 380px;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
     h2 {
       text-align: center;
-      margin-bottom: 24px;
+      font-size: 20px;
+      margin-bottom: 20px;
     }
-    input, button {
+
+    input {
       width: 100%;
-      padding: 14px;
       font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #cbd5f5;
+      outline: none;
     }
+
+    input:focus {
+      border-color: #22c55e;
+    }
+
     button {
+      width: 100%;
       margin-top: 16px;
+      padding: 16px;
+      font-size: 16px;
+      border-radius: 14px;
+      border: none;
       background: #22c55e;
       color: white;
-      border: none;
+      font-weight: 600;
       cursor: pointer;
     }
-    button:hover {
-      background: #16a34a;
+
+    button:active {
+      transform: scale(0.98);
     }
+
     small {
       display: block;
-      margin-top: 12px;
+      margin-top: 14px;
       text-align: center;
-      color: #555;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    /* Tablet & desktop */
+    @media (min-width: 768px) {
+      body {
+        padding: 32px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <h2>WA.me Generator</h2>
+  <div class="card">
+    <h2>WA.me Generator</h2>
 
-  <input
-    id="phone"
-    type="text"
-    placeholder="Contoh: 0881-0235-77091"
-    onkeydown="if(event.key==='Enter') generateWA()"
-  />
+    <input
+      id="phone"
+      type="tel"
+      placeholder="Contoh: 0881-0235-77091"
+      inputmode="numeric"
+      onkeydown="if(event.key==='Enter') generateWA()"
+    />
 
-  <button onclick="generateWA()">
-    Chat via WhatsApp
-  </button>
+    <button onclick="generateWA()">
+      Chat via WhatsApp
+    </button>
 
-  <small>coba aja wkwk</small>
+    <small>
+      Support format: 08xxx, +62xxx, spasi & strip
+    </small>
+  </div>
 
   <script>
     function generateWA() {
       let phone = document.getElementById("phone").value.trim();
 
-      // Ambil angka saja
       phone = phone.replace(/\D/g, "");
 
-      // Konversi 0xxx → 62xxx
       if (phone.startsWith("0")) {
         phone = "62" + phone.slice(1);
       }
 
-      // Validasi sederhana nomor Indonesia
       if (!phone.startsWith("62") || phone.length < 10) {
         alert("Nomor WhatsApp tidak valid");
         return;
       }
 
-      // Redirect ke WhatsApp
       window.location.href = `https://wa.me/${phone}`;
     }
   </script>
 
 </body>
 </html>
-
